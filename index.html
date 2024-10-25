@@ -11,13 +11,17 @@
     </audio>
 
     <script>
-        // If autoplay fails, attempt to play after user interaction
+        // Replace this with the start time in seconds (e.g., 30 seconds)
+        const startTime = 104; 
+
         const audio = document.getElementById('audioPlayer');
 
-        audio.addEventListener('error', () => {
-            console.log('Autoplay failed, user interaction required.');
-        });
+        // Set the start time when the audio metadata is loaded
+        audio.onloadedmetadata = () => {
+            audio.currentTime = startTime;
+        };
 
+        // Attempt to play the audio when the page loads
         window.onload = () => {
             audio.play().catch(error => {
                 console.log('Autoplay might need user interaction:', error);
