@@ -5,16 +5,17 @@
 </head>
 <body>
     <h2>Your Audio is Now Playing</h2>
-    <audio id="audioPlayer" autoplay>
+    <audio id="audioPlayer">
         <source src="https://drive.google.com/file/d/1DbzihCNJbQOUhTm8VvvIUGmxLpJ1aR32/view?usp=sharing" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
+    <button id="playButton" style="display:none;">Click to Play</button>
 
     <script>
         // Replace this with the start time in seconds (e.g., 30 seconds)
         const startTime = 104; 
-
         const audio = document.getElementById('audioPlayer');
+        const playButton = document.getElementById('playButton');
 
         // Set the start time when the audio metadata is loaded
         audio.onloadedmetadata = () => {
@@ -24,8 +25,16 @@
         // Attempt to play the audio when the page loads
         window.onload = () => {
             audio.play().catch(error => {
-                console.log('Autoplay might need user interaction:', error);
+                console.log('Autoplay failed, showing play button:', error);
+                // Show the play button if autoplay fails
+                playButton.style.display = 'block';
             });
+        };
+
+        // Fallback to play the audio manually if the user clicks the button
+        playButton.onclick = () => {
+            audio.play();
+            playButton.style.display = 'none'; // Hide the button after playback starts
         };
     </script>
 </body>
