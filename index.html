@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Audio Automatically</title>
+    <title>Play Audio on Mobile</title>
     <style>
         body {
             background: url('https://dl.dropboxusercontent.com/scl/fi/fvb0qihbh3castbb87el3/IMG_7085.PNG?rlkey=61u2oikqsrmvhjcalhizagoyu&st=xqyhw6xr') no-repeat center center fixed;
@@ -31,9 +31,7 @@
         }
 
         audio {
-            width: 100%;
-            max-width: 300px;
-            margin-top: 10px;
+            display: none; /* Hide the audio element initially */
         }
 
         #playButton {
@@ -54,7 +52,7 @@
 <body>
     <div class="container">
         <h2>For Youuu</h2>
-        <audio id="audioPlayer" controls style="display:none;">
+        <audio id="audioPlayer">
             <source src="https://www.dropbox.com/scl/fi/lliexns1rcavggungowv2/Full-Video_-Annana-Thaalaattum-Song-Maaran-Dhanush-Karthick-N-GV-Prakash-Sathya-Jyothi-Films.mp3?rlkey=um9d8c4zrweu56su725eohg6o&st=jn9oehnu&dl=1" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
@@ -62,38 +60,27 @@
     </div>
 
     <script>
-        const startTime = 104;
+        const startTime = 104; 
         const audio = document.getElementById('audioPlayer');
         const playButton = document.getElementById('playButton');
 
+        // Set the start time when the audio metadata is loaded
         audio.onloadedmetadata = () => {
             audio.currentTime = startTime;
         };
 
-        // Function to play the audio, called when the user clicks the button
+        // Function to play the audio, triggered by user interaction
         const playAudio = () => {
             audio.play().then(() => {
-                playButton.style.display = 'none';
-                audio.style.display = 'block'; // Show controls once audio is playing
+                audio.style.display = 'block'; // Show the controls after playback starts
+                playButton.style.display = 'none'; // Hide the play button
             }).catch(error => {
-                console.log('Audio playback failed:', error);
+                console.error('Audio playback failed:', error);
             });
         };
 
-        // Show the button if the page is on a mobile device
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        window.onload = () => {
-            if (!isMobile) {
-                playAudio(); // Try to autoplay if not on mobile
-            } else {
-                playButton.style.display = 'block'; // Show button on mobile
-            }
-        };
-
-        playButton.onclick = () => {
-            playAudio();
-        };
+        // Attach play function to button click event
+        playButton.addEventListener('click', playAudio);
     </script>
 </body>
 </html>
