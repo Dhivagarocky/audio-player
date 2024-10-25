@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Play Audio Automatically</title>
+</head>
+<body>
+    <h2>Your Audio is Now Playing</h2>
+    <audio id="audioPlayer" autoplay>
+        <source src="https://drive.google.com/file/d/1DbzihCNJbQOUhTm8VvvIUGmxLpJ1aR32/view?usp=sharing" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // If autoplay fails, attempt to play after user interaction
+        const audio = document.getElementById('audioPlayer');
+
+        audio.addEventListener('error', () => {
+            console.log('Autoplay failed, user interaction required.');
+        });
+
+        window.onload = () => {
+            audio.play().catch(error => {
+                console.log('Autoplay might need user interaction:', error);
+            });
+        };
+    </script>
+</body>
+</html>
