@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Audio Automatically</title>
+    <style>
+        /* Set the background image and style it */
+        body {
+            background: url('https://www.dropbox.com/scl/fi/fvb0qihbh3castbb87el3/IMG_7085.PNG?rlkey=61u2oikqsrmvhjcalhizagoyu&st=xqyhw6xr&dl=1') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            backdrop-filter: blur(5px); /* Slightly blur the background image */
+        }
+
+        /* Center and style the audio player and button */
+        .container {
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent background for readability */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 10px;
+        }
+
+        #playButton {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #playButton:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>For Youuu</h2>
+        <audio id="audioPlayer" controls autoplay>
+            <source src="https://www.dropbox.com/scl/fi/lliexns1rcavggungowv2/Full-Video_-Annana-Thaalaattum-Song-Maaran-Dhanush-Karthick-N-GV-Prakash-Sathya-Jyothi-Films.mp3?rlkey=um9d8c4zrweu56su725eohg6o&st=jn9oehnu&dl=1" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="playButton" style="display:none;">Click to Play</button>
+    </div>
+
+    <script>
+        // Replace this with the start time in seconds (e.g., 30 seconds)
+        const startTime = 104; 
+        const audio = document.getElementById('audioPlayer');
+        const playButton = document.getElementById('playButton');
+
+        // Set the start time when the audio metadata is loaded
+        audio.onloadedmetadata = () => {
+            audio.currentTime = startTime;
+        };
+
+        // Attempt to play the audio when the page loads
+        window.onload = () => {
+            audio.play().catch(error => {
+                console.log('Autoplay failed, showing play button:', error);
+                // Show the play button if autoplay fails
+                playButton.style.display = 'block';
+            });
+        };
+
+        // Fallback to play the audio manually if the user clicks the button
+        playButton.onclick = () => {
+            audio.play();
+            playButton.style.display = 'none'; // Hide the button after playback starts
+        };
+    </script>
+</body>
+</html>
